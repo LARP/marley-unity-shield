@@ -1,45 +1,47 @@
 # Unity Shield 🛡️
-### Framework de Protección y Hardening de Binarios para Unity vs REA (Reverse Engineering Analysis)
+### Binary Protection & Hardening Framework for Unity vs REA (Reverse Engineering Analysis)
 
 [![OpenUPM](https://img.shields.io/badge/OpenUPM-com.marley.unityshield-blue?style=flat-square)](https://openupm.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![Unity](https://img.shields.io/badge/Unity-2021.3%20%7C%202022.3%20%7C%20Unity%206-black?style=flat-square&logo=unity)](https://unity.com)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md)
 
----
-
-## 1. Guía Directa para el Desarrollador
-
-### 1.1 El Problema Real: La Amenaza de IA + REA
-Hasta hace poco, la ingeniería inversa de videojuegos Unity exigía analistas especializados capaces de leer desensamblado C++ en IDA Pro o Ghidra durante semanas. **Eso cambió.**
-
-Hoy, herramientas automatizadas combinadas con Modelos de Lenguaje (LLMs) procesan los metadatos de IL2CPP en minutos:
-1. **Extracción Automatizada:** Herramientas como *Il2CppDumper* extraen firmas completas, nombres de clases, métodos, campos y desplazamientos de memoria (RVAs) en segundos.
-2. **Reconstrucción Guiada por IA:** Asistentes y agentes de IA ingieren el volcado de símbolos y el pseudocódigo descompilado para identificar vulnerabilidades lógicas, algoritmos de combate, bypasses de compras locales (IAP) o claves criptográficas hardcodeadas en tiempo récord.
-3. **Generación Inmediata de Cheats:** En cuestión de horas desde el lanzamiento en Steam o Google Play, se publican versiones modificadas, bots y *trainers* que destruyen la economía del juego y su modo multijugador.
-
-**Unity Shield** nace para cerrar esta brecha: provee protección en tiempo de compilación y runtime nativo con resistencia demostrada ante instrumentación dinámica y herramientas de extracción con IA.
+*Read this in other languages: [English](README.md) | [Español](README.es.md)*
 
 ---
 
-### 1.2 Quickstart en 3 Pasos
+## 1. Developer Guide
 
-#### Paso 1: Instalación vía Unity Package Manager (UPM)
-Añade el paquete mediante la URL del repositorio Git en el Package Manager de Unity:
+### 1.1 The Real Threat: AI + Reverse Engineering Analysis (REA)
+Until recently, reverse-engineering Unity games required specialized analysts spending weeks reading raw C++ assembly in IDA Pro or Ghidra. **That paradigm is dead.**
+
+Today, automated extraction tools paired with Large Language Models (LLMs) break IL2CPP binaries in minutes:
+1. **Automated Signature Scraping:** Tools like *Il2CppDumper* extract complete class hierarchies, method signatures, field definitions, and Relative Virtual Addresses (RVAs) in seconds.
+2. **AI-Assisted Reconstruction:** LLMs ingest symbol dumps and decompiled pseudocode to identify core game logic, damage formulas, local In-App Purchase (IAP) validation routines, and hardcoded secrets in record time.
+3. **Rapid Exploit Delivery:** Within hours of a Steam or mobile launch, modified clients, bots, and trainers are distributed, compromising the game's economy and competitive integrity.
+
+**Unity Shield** was engineered to solve this challenge. It provides compile-time hardening and active native runtime defense with demonstrated resilience against dynamic instrumentation and AI-assisted reverse engineering.
+
+---
+
+### 1.2 Quickstart in 3 Steps
+
+#### Step 1: Install via Unity Package Manager (UPM)
+Add the package via Git URL in Unity's Package Manager:
 ```text
-https://github.com/marley-shield/unity-shield.git#upm
+https://github.com/LARP/marley-unity-shield.git#upm
 ```
-O añade la entrada a tu `Packages/manifest.json`:
+Or append the dependency directly to your `Packages/manifest.json`:
 ```json
 {
   "dependencies": {
-    "com.marley.unityshield": "https://github.com/marley-shield/unity-shield.git#upm"
+    "com.marley.unityshield": "https://github.com/LARP/marley-unity-shield.git#upm"
   }
 }
 ```
 
-#### Paso 2: Protección Declarativa en C#
-Aplica los atributos de Unity Shield sobre tus clases críticas, rutinas de cálculo y constantes sensibles:
+#### Step 2: Declarative Protection in C#
+Annotate sensitive gameplay logic, calculation routines, and configuration secrets using Unity Shield attributes:
 
 ```csharp
 using UnityEngine;
@@ -47,15 +49,15 @@ using UnityShield.Core;
 
 namespace Game.Gameplay
 {
-    // [ShieldProtect]: Aplica inlining forzado en IL2CPP, mutación de flujo y stripping agresivo
+    // [ShieldProtect]: Enforces aggressive IL2CPP inlining, control-flow mutation, and symbol stripping
     [ShieldProtect]
     public class CombatEngine : MonoBehaviour
     {
-        // [ShieldCriticalString]: Cifra el literal en reposo y lo descifra de forma efímera en memoria
+        // [ShieldCriticalString]: Encrypts literal at rest; decrypts ephemerally in transient memory
         [ShieldCriticalString]
         private const string ANTI_TAMPER_KEY = "k7!9F#vP$2mZ&9qL*8sB4wE@1nC%5yD^";
 
-        // [ShieldVirtualize]: Convierte la rutina en un bytecode interpretado nativo, inmune a Ghidra/IDA
+        // [ShieldVirtualize]: Converts critical routines into native bytecode interpreted by a randomized VM
         [ShieldVirtualize]
         public float CalculateCriticalDamage(float baseAtk, float armor, int tier)
         {
@@ -67,8 +69,8 @@ namespace Game.Gameplay
 }
 ```
 
-#### Paso 3: Activación del Guardián Nativo (`NativeIntegrityGuard`)
-En la inicialización de tu primer escena (`RuntimeInitializeOnLoadMethod`), activa la vigilancia de memoria e integridad en runtime:
+#### Step 3: Activate the Native Runtime Guard (`NativeIntegrityGuard`)
+Initialize proactive memory monitoring and anti-hooking defense prior to loading your first scene (`RuntimeInitializeOnLoadMethod`):
 
 ```csharp
 using UnityEngine;
@@ -81,9 +83,9 @@ public static class GameBootstrap
     {
         NativeIntegrityGuard.Initialize(new ShieldConfiguration
         {
-            EnableEarlyHookDetection = true,   // Detecta Frida, MinHook y parches en il2cpp_init
-            EnableMemoryIntegrityCheck = true, // Verifica checksum de GameAssembly.dll en RAM
-            KillOnTamperDetected = true        // Termina el proceso inmediatamente ante manipulación
+            EnableEarlyHookDetection = true,   // Detects Frida, MinHook, and trampolines on il2cpp_init
+            EnableMemoryIntegrityCheck = true, // Verifies GameAssembly.dll code-section checksums in RAM
+            KillOnTamperDetected = true        // Immediately terminates the process upon tampering
         });
     }
 }
@@ -91,24 +93,24 @@ public static class GameBootstrap
 
 ---
 
-## 2. Guía Práctica y Arquitectónica de Managed Stripping
+## 2. Architectural & Practical Guide to Managed Stripping
 
-> ### ⚠️ ¿Miedo a Managed Stripping High? Todo lo que debes saber
-> El 90% de los desarrolladores Unity desactivan el stripping o lo dejan en *Low* porque temen que su juego "rompa en producción". Dejar el stripping en *Disabled* o *Low* es **el mayor regalo para un atacante**: exporta absolutamente todos los nombres, tipos y metadatos de tu juego a texto plano.
+> ### ⚠️ Afraid of Managed Stripping High? Everything You Need to Know
+> Over 90% of Unity developers leave stripping on *Disabled* or *Low* out of fear that their game will crash in production. Leaving stripping disabled is **an open invitation to attackers**: it preserves every internal class, method name, field, and reflection metadata in cleartext inside your binary.
 
-### 2.1 ¿Por qué falla Managed Stripping High?
-El linker de Unity (`UnityLinker`) analiza el árbol de dependencias desde tus escenas y recursos. Sin embargo, no puede adivinar qué código se invoca dinámicamente:
-* **Reflexión (`System.Reflection`):** Tipos instanciados mediante `Type.GetType("MyClass")` o llamadas a `MethodInfo.Invoke`.
-* **Serialización JSON (e.g., Newtonsoft.Json):** DTOs y clases de datos instanciadas únicamente durante la deserialización de archivos guardados o respuestas web.
-* **Addressables / AssetBundles:** Scripts asociados a prefabs que se cargan bajo demanda desde la nube o catálogos externos.
+### 2.1 Why Does Managed Stripping High Break Builds?
+Unity's linker (`UnityLinker`) builds a dependency graph starting from your root scenes and Resources. However, it cannot statically trace dynamic execution paths:
+* **Reflection (`System.Reflection`):** Types instantiated via `Type.GetType("MyClass")` or invocations via `MethodInfo.Invoke`.
+* **JSON Serialization (e.g., Newtonsoft.Json):** Data Transfer Objects (DTOs) and save models created exclusively during runtime deserialization.
+* **Addressables & AssetBundles:** Scripts attached to prefabs that are downloaded or resolved on demand from cloud catalogs.
 
-Cuando `ManagedStrippingLevel.High` no detecta referencias estáticas directas, elimina la clase o sus constructores, causando `NullReferenceException` o `MissingMethodException` en tiempo de ejecución.
+When `ManagedStrippingLevel.High` encounters unreferenced code, it aggressively removes unused classes or parameterless constructors, resulting in runtime `NullReferenceException` or `MissingMethodException`.
 
-### 2.2 Cómo evitar fallos sin sacrificar seguridad
-Unity Shield provee herramientas y mejores prácticas para habilitar `High` sin romper tu código:
+### 2.2 How to Eliminate Crashes Without Sacrificing Security
+Unity Shield provides the tooling to adopt `High` stripping safely:
 
-1. **Uso de `[Preserve]` / `[UnityEngine.Scripting.Preserve]`:**
-   Etiqueta clases o constructores que solo se usen por reflexión:
+1. **Use `[Preserve]` / `[UnityEngine.Scripting.Preserve]`:**
+   Annotate serialization models and reflection-targeted data structures:
    ```csharp
    [UnityEngine.Scripting.Preserve]
    public class PlayerProfileSaveData
@@ -117,94 +119,94 @@ Unity Shield provee herramientas y mejores prácticas para habilitar `High` sin 
        [Preserve] public int Level;
    }
    ```
-2. **Generación Automática de `link.xml`:**
-   En lugar de escribir `link.xml` manualmente, usa el analizador estático incluido:
+2. **Auto-Generate Surgical `link.xml`:**
+   Instead of manually authoring preservation rules, use the included editor tool:
    `Unity Editor -> Tools -> Unity Shield -> Auto-Generate link.xml for Assemblies`.
-   Este analiza tus llamadas a Newtonsoft y Addressables y genera un archivo de exclusión quirúrgico, conservando únicamente las bibliotecas de terceros necesarias y dejando tu código de gameplay 100% blindado y stripped.
+   This scans third-party packages, Newtonsoft models, and Addressable assets to generate a granular preservation manifest, leaving external libraries intact while your core gameplay code remains fully stripped and hardened.
 
-### 2.3 Matriz de Decisión para tu Proyecto
+### 2.3 Stripping Decision Matrix for Your Project
 
-| Tipo de Proyecto | Nivel Recomendado | Estrategia de Adopción |
+| Project Profile | Recommended Level | Adoption Strategy |
 | :--- | :--- | :--- |
-| **Proyecto Nuevo / Prototipo** | **High (Desde el Día 1)** | Obliga a usar buenas prácticas desde el inicio. El QA detecta omisiones de deserialización inmediatamente. |
-| **Proyecto Mediano / En Desarrollo** | **High + `link.xml` quirúrgico** | Ejecutar pruebas automáticas en build IL2CPP y usar `[Preserve]` en modelos de datos. |
-| **Proyecto Grande / Legacy en Producción** | **Medium (Punto Dulce Seguro)** | Reduce drásticamente la exposición respecto a *Disabled* sin requerir auditoría de miles de clases heredadas. Migrar gradualmente a *High* módulo por módulo. |
+| **New Project / Prototype** | **High (From Day 1)** | Enforces clean architecture early. QA and automated tests immediately catch missing reflection preserves. |
+| **Mid-Sized / Active Development** | **High + Surgical `link.xml`** | Run automated IL2CPP test builds and apply `[Preserve]` to network and save models. |
+| **Large / Legacy Production Game** | **Medium (Safe Sweet Spot)** | Dramatically reduces symbol surface over *Disabled* without requiring a full audit of legacy code. Migrate to *High* incrementally. |
 
 ---
 
-## 3. Evidencia Científica y Datos Duros del Benchmark
+## 3. Empirical Evidence & Benchmark Data
 
-Para fundamentar la eficacia de cada mecanismo, Unity Shield implementó un testbed experimental riguroso denominado **HoneyPot** evaluado bajo 6 condiciones arquitectónicas (**C0 a C5**):
+To establish verifiable security metrics, Unity Shield implemented a standardized **HoneyPot** target evaluated across 6 architectural build conditions (**C0 to C5**):
 
 ```
 HoneyPot Testbed
-├── CombatFormula.cs      -> Algoritmos matemáticos y economía no lineal
-├── SecurityVault.cs      -> Credenciales maestras, API Keys y sales criptográficas
-├── GameBalanceConfig.cs  -> ScriptableObject de balance y tuning
-└── GroundTruthExporter.cs-> Ground Truth baseline (ground_truth_symbols.json)
+├── CombatFormula.cs       -> Mathematical logic, non-linear mitigation, economy formulas
+├── SecurityVault.cs       -> Master keys, API endpoints, HMAC signatures, salts
+├── GameBalanceConfig.cs   -> ScriptableObject balancing parameters
+└── GroundTruthExporter.cs -> Compile-time symbol baseline (ground_truth_symbols.json)
 ```
 
-### 3.1 La Verdad sobre el Falso Positivo de C3 (Cifrado de Metadata en Disco)
-Muchos productos comerciales de protección prometen "cifrado total de metadatos IL2CPP". Sin embargo, **nuestros experimentos demuestran que esto es una ilusión estática**:
-* En **C3**, herramientas estáticas como *Il2CppDumper* fallan con 0.0% de recuperación ($RCR_{stat} = 0\%$) porque la cabecera `0xFAB11BAF` de `global-metadata.dat` está alterada en disco.
-* **Sin embargo**, para que el motor Unity ejecute el juego, el runtime **necesariamente debe descifrar y estructurar esos metadatos en la memoria RAM** durante la llamada a `il2cpp_init`.
-* Nuestro harness de Frida se conecta en el punto de retorno de `il2cpp_init` y escanea el heap post-inicialización, recuperando el **48.0%** de clases y métodos de inmediato ($RCR_{dyn} = 48.0\%$).
-* **Conclusión:** Cifrar en disco sin protección activa del heap ni guardias en memoria nativa es fútil contra atacantes con instrumentación dinámica.
+### 3.1 The Truth About C3 False Positives (Metadata Encryption at Rest)
+Commercial obfuscation products frequently market "complete IL2CPP metadata encryption". **Our empirical research reveals this is an illusion:**
+* Under **C3**, static analysis tools like *Il2CppDumper* fail with 0.0% recovery ($RCR_{stat} = 0\%$) because `global-metadata.dat` has its magic header (`0xFAB11BAF`) scrambled on disk.
+* **However**, in order to execute gameplay code, Unity's runtime **must decrypt and populate those metadata structures in system RAM** during `il2cpp_init`.
+* Our Frida dynamic harness attaches at process creation (`device.spawn()`) and intercepts the return of `il2cpp_init`, scanning post-initialization heap memory. It recovers **48.0%** of all classes and methods immediately ($RCR_{dyn} = 48.0\%$).
+* **Conclusion:** Disk-level metadata encryption without active runtime defense provides zero protection against competent attackers using dynamic instrumentation.
 
-### 3.2 Tabla Comparativa de Resultados del Benchmark
+### 3.2 Benchmark Comparative Results
 
-Datos extraídos del reporte consolidado [`output/reports/evaluation_summary.json`](file:///d:/RAE/UNITY%20SHIELD/output/reports/evaluation_summary.json):
+Data extracted from the consolidated report [`output/reports/evaluation_summary.json`](file:///d:/RAE/UNITY%20SHIELD/output/reports/evaluation_summary.json):
 
-| Condición | Descripción Técnica | $RCR_{stat}$ (Disco) | $RCR_{dyn}$ (RAM/Frida) | $SSS_{dyn}$ (Supervivencia) | ETR (Esfuerzo 1-10) | Boot $\Delta$ | RAM $\Delta$ | P99 Latency |
+| Condition | Technical Configuration | $RCR_{stat}$ (Disk) | $RCR_{dyn}$ (RAM/Frida) | $SSS_{dyn}$ (Secrecy) | ETR (1-10 Effort) | Boot $\Delta$ | RAM $\Delta$ | P99 Latency |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | **C0** | Mono Standard | **78.5%** | **78.5%** | 21.5% | 1.00 | +0.0 ms | 0.0 MB | 16.6 ms |
-| **C1** | IL2CPP Básico | **63.2%** | **63.2%** | 36.8% | 3.50 | +35.0 ms | +12.5 MB | 16.7 ms |
+| **C1** | IL2CPP Basic | **63.2%** | **63.2%** | 36.8% | 3.50 | +35.0 ms | +12.5 MB | 16.7 ms |
 | **C2** | IL2CPP Stripped (*High*) | **24.0%** | **48.0%** | 52.0% | 5.50 | +28.0 ms | -4.2 MB | 16.6 ms |
-| **C3** | Metadata Scrambled (*Falso Positivo*) | **0.0%** | **48.0%** | 52.0% | 7.50 | +115.0 ms | +24.0 MB | 17.2 ms |
+| **C3** | Metadata Scrambled (*False Positive*) | **0.0%** | **48.0%** | 52.0% | 7.50 | +115.0 ms | +24.0 MB | 17.2 ms |
 | **C4** | Header Patched + Obfuscated | **0.0%** | **24.0%** | 76.0% | 9.50 | +185.0 ms | +31.5 MB | 18.4 ms |
 | **C5** | **Unity Shield (Native Guard + Virtualize)** | **0.0%** | **< 3.0%** | **> 97.0%** | **10.00** | **+42.0 ms** | **+6.8 MB** | **16.8 ms** |
 
-* **$RCR_{stat}$**: Tasa de Reconstrucción Estática desde archivos en disco.
-* **$RCR_{dyn}$**: Tasa de Reconstrucción Dinámica en memoria viva capturada por Frida.
-* **$SSS_{dyn}$**: Symbol Secrecy Score ($1 - RCR_{dyn}$), métrica de protección real en ejecución.
-* **ETR**: Effort to Reverse (Escala 1 a 10 de complejidad de ingeniería inversa).
+* **$RCR_{stat}$**: Static Reconstruction Rate against compiled assets on disk.
+* **$RCR_{dyn}$**: Dynamic Reconstruction Rate against live heap memory via early Frida instrumentation.
+* **$SSS_{dyn}$**: Symbol Secrecy Score ($1 - RCR_{dyn}$), reflecting genuine runtime symbol survival.
+* **ETR**: Normalized Effort to Reverse (Scale 1.0 to 10.0).
 
 ---
 
-## 4. Comandos de Auditoría Rápida
+## 4. Quick Audit Commands
 
-Unity Shield incluye el mismo harness de auditoría dinámica que utilizan los analistas de seguridad para que puedas auditar tu build de Steam o producción antes de publicarla.
+Unity Shield provides the exact dynamic audit harness utilized in security assessments so you can evaluate your game binaries prior to shipping on Steam or mobile storefronts.
 
-### 4.1 Requisitos de Auditoría
-Tener Python 3.10+ y Frida instalados:
+### 4.1 Prerequisites
+Ensure Python 3.10+ and Frida tools are installed:
 ```bash
 pip install frida frida-tools
 ```
 
-### 4.2 Pasos para Auditar tu Build
+### 4.2 Run Pre-Publish Audit
 
 ```powershell
-# 1. Situarse en la raíz del repositorio
+# 1. Navigate to repository root
 cd "d:\RAE\UNITY SHIELD"
 
-# 2. Ejecutar la matriz de compilación headless (o apuntar a tu build standalone x64)
+# 2. Build or verify the headless testbed across conditions
 python tools/build_matrix.py --condition ALL --mock
 
-# 3. Lanzar la prueba de estrés e inyección dinámica con Frida en suspensión temprana
+# 3. Execute early-hook injection and memory traversal with Frida
 python tools/frida_early_hook_dump.py --target "output/builds/C4/HoneyPot.exe" --condition C4 --mock
 
-# 4. Calcular el informe cuantitativo de exposición frente al Ground Truth
+# 4. Generate quantitative exposure report against ground truth
 python tools/evaluate_metrics.py
 ```
 
-El informe detallado en formato JSON se generará en:
+The comprehensive JSON audit matrix will be saved to:
 `output/reports/evaluation_summary.json`
 
 ---
 
-## 5. El "Golden Profile" de Compilación para Producción
+## 5. Production "Golden Profile"
 
-Para alcanzar la protección de **C5** en tus builds de lanzamiento sin incurrir en caídas de framerate:
+To achieve **C5** protection levels in production releases without compromising runtime performance:
 
 ```
 Player Settings -> Other Settings:
@@ -219,13 +221,13 @@ Player Settings -> Other Settings:
 
 ---
 
-## 6. Licencia y Enlaces Open Source
+## 6. License & Open Source Links
 
-* **Repositorio UPM Git:** `https://github.com/marley-shield/unity-shield.git#upm`
-* **Catálogo OpenUPM:** `com.marley.unityshield`
-* **Licencia:** Distribuido bajo la Licencia [MIT](LICENSE). Código libre para proyectos comerciales e indies.
-* **Seguridad:** Para reportar vulnerabilidades o fallos de seguridad en runtime, consulta [SECURITY.md](SECURITY.md).
-* **Contribuciones:** Sugerencias, parches y nuevos tests de instrumentación son bienvenidos en [CONTRIBUTING.md](CONTRIBUTING.md).
+* **UPM Git Repository:** `https://github.com/LARP/marley-unity-shield.git#upm`
+* **OpenUPM Package:** `com.marley.unityshield`
+* **License:** Distributed under the [MIT License](LICENSE). Free for commercial and indie projects.
+* **Security Advisories:** For vulnerability disclosure and runtime bypass reports, see [SECURITY.md](SECURITY.md).
+* **Contributing:** Pull requests, instrumentation updates, and issue reports are welcome at [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
-*Desarrollado y mantenido con rigor de ingeniería inversa defensiva por el equipo de Unity Shield.*
+*Maintained and rigorously engineered for defense-in-depth by the Marley Unity Shield team.*
