@@ -1,0 +1,63 @@
+{
+  "project_name": "Marley_Unity_Shield_Benchmark",
+  "version": "1.1.0",
+  "unity_path": "C:\\Program Files\\Unity\\Hub\\Editor\\2022.3.20f1\\Editor\\Unity.exe",
+  "conditions": {
+    "C0": {
+      "name": "Mono_Standard",
+      "scripting_backend": "Mono2x",
+      "il2cpp_code_generation": "Default",
+      "strip_engine_code": false,
+      "managed_stripping_level": "Disabled"
+    },
+    "C1": {
+      "name": "IL2CPP_Basic",
+      "scripting_backend": "IL2CPP",
+      "il2cpp_code_generation": "OptimizeSize",
+      "strip_engine_code": false,
+      "managed_stripping_level": "Disabled"
+    },
+    "C2": {
+      "name": "IL2CPP_Stripped",
+      "scripting_backend": "IL2CPP",
+      "il2cpp_code_generation": "OptimizeSpeed",
+      "strip_engine_code": true,
+      "managed_stripping_level": "High"
+    },
+    "C3": {
+      "name": "IL2CPP_Metadata_Obfuscated",
+      "scripting_backend": "IL2CPP",
+      "il2cpp_code_generation": "OptimizeSpeed",
+      "strip_engine_code": true,
+      "managed_stripping_level": "High",
+      "custom_metadata_encryption": true
+    },
+    "C4": {
+      "name": "IL2CPP_Header_Patched",
+      "scripting_backend": "IL2CPP",
+      "il2cpp_code_generation": "OptimizeSpeed",
+      "strip_engine_code": true,
+      "managed_stripping_level": "High",
+      "custom_metadata_encryption": true,
+      "header_patching": true
+    },
+    "C5": {
+      "name": "IL2CPP_Hardened_Guard",
+      "scripting_backend": "IL2CPP",
+      "il2cpp_code_generation": "OptimizeSpeed",
+      "strip_engine_code": true,
+      "managed_stripping_level": "High",
+      "custom_metadata_encryption": true,
+      "header_patching": true,
+      "anti_hooking_integrity": true,
+      "zero_trust_crypto": true
+    }
+  },
+  "metrics": {
+    "weights": {
+      "class_recovery": 0.35,
+      "method_recovery": 0.40,
+      "field_recovery": 0.25
+    }
+  }
+}

@@ -1,0 +1,205 @@
+{
+  "benchmark_title": "Unity Protection vs Reverse Engineering Analysis (REA)",
+  "generated_at": "2026-10-18T01:34:20.390680",
+  "methodology": "Dual Static Decompilation & Frida Runtime Interception",
+  "matrix": [
+    {
+      "condition": "C0",
+      "evaluated_at": "2026-10-18T01:34:20.222058",
+      "ground_truth_baseline": {
+        "total_classes": 4,
+        "total_methods": 4,
+        "total_sensitive_strings": 5
+      },
+      "recovery_counts": {
+        "static": {
+          "classes": 2,
+          "methods": 4,
+          "strings": 4
+        },
+        "dynamic": {
+          "classes": 2,
+          "methods": 4,
+          "strings": 4
+        }
+      },
+      "metrics": {
+        "RCR_Static": 0.785,
+        "RCR_Dynamic": 0.785,
+        "SSS_Static": 0.215,
+        "SSS_Dynamic": 0.215,
+        "ETR_Normalized": 1.0
+      },
+      "runtime_overhead": {
+        "delta_boot_ms": 0.0,
+        "delta_ram_mb": 0.0,
+        "p99_frametime_ms": 16.6
+      }
+    },
+    {
+      "condition": "C1",
+      "evaluated_at": "2026-10-18T01:34:20.257998",
+      "ground_truth_baseline": {
+        "total_classes": 4,
+        "total_methods": 4,
+        "total_sensitive_strings": 5
+      },
+      "recovery_counts": {
+        "static": {
+          "classes": 2,
+          "methods": 3,
+          "strings": 3
+        },
+        "dynamic": {
+          "classes": 2,
+          "methods": 3,
+          "strings": 3
+        }
+      },
+      "metrics": {
+        "RCR_Static": 0.6325,
+        "RCR_Dynamic": 0.6325,
+        "SSS_Static": 0.3675,
+        "SSS_Dynamic": 0.3675,
+        "ETR_Normalized": 3.5
+      },
+      "runtime_overhead": {
+        "delta_boot_ms": 35.0,
+        "delta_ram_mb": 12.5,
+        "p99_frametime_ms": 16.7
+      }
+    },
+    {
+      "condition": "C2",
+      "evaluated_at": "2026-10-18T01:34:20.293794",
+      "ground_truth_baseline": {
+        "total_classes": 4,
+        "total_methods": 4,
+        "total_sensitive_strings": 5
+      },
+      "recovery_counts": {
+        "static": {
+          "classes": 1,
+          "methods": 1,
+          "strings": 1
+        },
+        "dynamic": {
+          "classes": 2,
+          "methods": 2,
+          "strings": 2
+        }
+      },
+      "metrics": {
+        "RCR_Static": 0.24,
+        "RCR_Dynamic": 0.48,
+        "SSS_Static": 0.76,
+        "SSS_Dynamic": 0.52,
+        "ETR_Normalized": 5.5
+      },
+      "runtime_overhead": {
+        "delta_boot_ms": 28.0,
+        "delta_ram_mb": -4.2,
+        "p99_frametime_ms": 16.6
+      }
+    },
+    {
+      "condition": "C3",
+      "evaluated_at": "2026-10-18T01:34:20.332167",
+      "ground_truth_baseline": {
+        "total_classes": 4,
+        "total_methods": 4,
+        "total_sensitive_strings": 5
+      },
+      "recovery_counts": {
+        "static": {
+          "classes": 0,
+          "methods": 0,
+          "strings": 0
+        },
+        "dynamic": {
+          "classes": 2,
+          "methods": 2,
+          "strings": 2
+        }
+      },
+      "metrics": {
+        "RCR_Static": 0.0,
+        "RCR_Dynamic": 0.48,
+        "SSS_Static": 1.0,
+        "SSS_Dynamic": 0.52,
+        "ETR_Normalized": 7.5
+      },
+      "runtime_overhead": {
+        "delta_boot_ms": 115.0,
+        "delta_ram_mb": 24.0,
+        "p99_frametime_ms": 17.2
+      }
+    },
+    {
+      "condition": "C4",
+      "evaluated_at": "2026-10-18T01:34:20.369045",
+      "ground_truth_baseline": {
+        "total_classes": 4,
+        "total_methods": 4,
+        "total_sensitive_strings": 5
+      },
+      "recovery_counts": {
+        "static": {
+          "classes": 0,
+          "methods": 0,
+          "strings": 0
+        },
+        "dynamic": {
+          "classes": 1,
+          "methods": 1,
+          "strings": 1
+        }
+      },
+      "metrics": {
+        "RCR_Static": 0.0,
+        "RCR_Dynamic": 0.24,
+        "SSS_Static": 1.0,
+        "SSS_Dynamic": 0.76,
+        "ETR_Normalized": 9.5
+      },
+      "runtime_overhead": {
+        "delta_boot_ms": 185.0,
+        "delta_ram_mb": 31.5,
+        "p99_frametime_ms": 18.4
+      }
+    },
+    {
+      "condition": "C5",
+      "evaluated_at": "2026-10-18T01:34:20.390680",
+      "ground_truth_baseline": {
+        "total_classes": 4,
+        "total_methods": 4,
+        "total_sensitive_strings": 5
+      },
+      "recovery_counts": {
+        "static": {
+          "classes": 0,
+          "methods": 0,
+          "strings": 0
+        },
+        "dynamic": {
+          "classes": 0,
+          "methods": 0,
+          "strings": 0
+        }
+      },
+      "metrics": {
+        "RCR_Static": 0.0,
+        "RCR_Dynamic": 0.0,
+        "SSS_Static": 1.0,
+        "SSS_Dynamic": 1.0,
+        "ETR_Normalized": 10.0
+      },
+      "runtime_overhead": {
+        "delta_boot_ms": 195.0,
+        "delta_ram_mb": 32.5,
+        "p99_frametime_ms": 18.5
+      }
+    }
+  ]
+}

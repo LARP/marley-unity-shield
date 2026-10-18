@@ -1,0 +1,25 @@
+{
+  "name": "com.marley.unityshield",
+  "displayName": "Marley Unity Shield",
+  "version": "1.0.0",
+  "unity": "2021.3",
+  "description": "Hardening, dynamic instrumentation resistance, and binary protection benchmarking suite for Unity IL2CPP / Mono runtimes.",
+  "keywords": [
+    "security",
+    "anti-tamper",
+    "anti-hooking",
+    "il2cpp",
+    "hardening",
+    "zero-trust",
+    "benchmark"
+  ],
+  "author": {
+    "name": "Marley Unity Shield Contributors",
+    "url": "https://github.com/marley-games/marley-unity-shield"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marley-games/marley-unity-shield.git"
+  },
+  "license": "MIT"
+}
