@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/assets/marley_unity_shield_logo.jpg" alt="Marley Unity Shield Emblema 3D" width="180px" />
+</p>
+
 # Unity Shield 🛡️
 ### Framework de Protección y Hardening de Binarios para Unity vs REA (Reverse Engineering Analysis)
 
