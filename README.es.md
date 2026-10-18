@@ -1,6 +1,10 @@
 # Unity Shield 🛡️
 ### Framework de Protección y Hardening de Binarios para Unity vs REA (Reverse Engineering Analysis)
 
+<p align="center">
+  <img src="docs/assets/marley_unity_shield_banner.jpg" alt="Marley Unity Shield Banner Oficial" width="100%" />
+</p>
+
 [![OpenUPM](https://img.shields.io/badge/OpenUPM-com.marley.unityshield-blue?style=flat-square)](https://openupm.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![Unity](https://img.shields.io/badge/Unity-2021.3%20%7C%202022.3%20%7C%20Unity%206-black?style=flat-square&logo=unity)](https://unity.com)
